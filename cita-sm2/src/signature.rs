@@ -231,14 +231,15 @@ impl Sign for Signature {
 
     fn recover(&self, message: &Message) -> Result<Self::PubKey, Error> {
         let ctx = SigCtx::new();
-        let sig = Sm2Signature::new(self.r(), self.s());
+        let sig = efficient_sm2::Signature::new(self.r(), self.s()).unwrap();
         let mut pk_full = [0u8; 65];
         pk_full[0] = 4;
         pk_full[1..].copy_from_slice(self.pk());
+        let get_pub = efficient_sm2::PublicKey::new(&pk_full[1..33],&pk_full[33..65]);
         ctx.load_pubkey(&pk_full[..])
             .map_err(|_| Error::RecoverError)
-            .and_then(|pk| {
-                if ctx.verify(&message, &pk, &sig) {
+            .and_then(|_| {
+                if sig.verify(&get_pub,&message).is_ok() {
                     Ok(PubKey::from(self.pk()))
                 } else {
                     Err(Error::RecoverError)
