@@ -12,7 +12,7 @@ hashable = { path = "../hashable" }
 cita-crypto-trait = { path = "../cita-crypto-trait" }
 rlp = { path = "../rlp" }
 libsm = { git = "https://github.com/cryptape/libsm", rev = "ac323abd3512a9fdb8bfd6cd349a6fc46deb688f" }
-efficient-sm2 = { git = "https://github.com/DrewZt/efficient-sm2.git", rev = "23071f4ba443746ecc7c851bad6532d5d8f66134" }
+efficient-sm2 = { git = "https://github.com/DrewZt/efficient-sm2.git", rev = "a83ffdcd2220b11d61b4c57e1c86025a9bc4c9d3" }
 
 [features]
 default = []
